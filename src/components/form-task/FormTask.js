@@ -1,9 +1,8 @@
-import { useState } from 'react';
-import './FormTask.css';
+import { useState, useEffect } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 import { BiTrash, BiCheck } from "react-icons/bi";
-import { useEffect } from 'react';
+import './FormTask.sass';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const getTask = () => {
@@ -84,7 +83,9 @@ const FormTask = () => {
                 {task.map(getTask => (
                     <div key={getTask.id} className={getTask.isComplete ? 'list-task-complete' : 'list-task'}>
                         <li className='li'>
-                            {getTask.title}
+                            <p>
+                                {getTask.title}
+                            </p>
                             <div className='bt-check-trash'>
                                 <BiCheck
                                     className='bt-check'
