@@ -3,6 +3,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import { BiTrash, BiCheck } from "react-icons/bi";
 import './FormTask.sass';
 import 'react-toastify/dist/ReactToastify.css';
+import Modal from '../modal/Modal';
 
 
 const getTask = () => {
@@ -13,12 +14,14 @@ const getTask = () => {
     } else {
         return [];
     }
-}
+};
 
 const FormTask = () => {
 
     const [input, setInput] = useState('');
     const [task, setTask] = useState(getTask());
+    const [showModal, setShowModal] = useState(false);
+    const [toDelete, setToDelete] = useState(-1);
 
     const addTask = (event) => {
         event.preventDefault();
@@ -34,17 +37,14 @@ const FormTask = () => {
                 title: input,
                 isComplete: false
             }
-
             setTask([...task, newTask]);
         }
         setInput("");
-    }
+    };
 
     useEffect(() => {
         localStorage.setItem("tarefas", JSON.stringify(task));
-    }, [task])
-
-
+    }, [task]);
 
     const taskComplete = (id) => {
 
@@ -56,18 +56,18 @@ const FormTask = () => {
         })
 
         setTask(taskComplete);
-    }
+    };
 
     const taskTrash = (id) => {
-        setTask(task.filter(remove => remove.id !== id))
-    }
+
+        const teste = task.filter(remove => remove.id !== id);
+        setShowModal(false);
+        setTask(teste);
+    };
 
     return (
-
         <div className='todo'>
-
             <ToastContainer />
-
             <form>
                 <h1>TODO LIST</h1>
                 <div className='box-input'>
@@ -93,14 +93,21 @@ const FormTask = () => {
                                 />
                                 <BiTrash
                                     className='bt-trash'
-                                    onClick={() => taskTrash(getTask.id)}
+                                    onClick={() => {
+                                        setToDelete(getTask.id);
+                                        setShowModal(true);
+                                    }}
                                 />
                             </div>
                         </li>
                     </div>
                 ))}
-
             </form>
+            <Modal
+                show={showModal}
+                setClose={() => setShowModal(false)}
+                taskTrash={() => taskTrash(toDelete)}
+            />
         </div>
     )
 }

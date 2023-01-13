@@ -1,9 +1,14 @@
+import React from "react";
 import AddTask from "./components/form-task/FormTask";
+import Modal from "./components/modal/Modal";
 
 
 function App() {
     return (
-        <AddTask />
+        <>
+            <AddTask />
+            <Modal />
+        </>
     );
 }
 
