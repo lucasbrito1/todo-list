@@ -59,10 +59,9 @@ const FormTask = () => {
     };
 
     const taskTrash = (id) => {
-
-        const teste = task.filter(remove => remove.id !== id);
+        const remove = task.filter(remove => remove.id !== id);
         setShowModal(false);
-        setTask(teste);
+        setTask(remove);
     };
 
     return (
